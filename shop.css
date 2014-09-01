@@ -1,0 +1,11 @@
+table.none {
+    display: none;
+}
+table.apear {
+    display: table;
+}
+table caption {
+    float: left;
+    font-weight: 700;
+    margin-bottom: 15px;
+}
