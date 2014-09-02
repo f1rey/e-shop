@@ -58,6 +58,7 @@ var eShop = {
                 eShop.addItem(event.target.dataset.id);
                 eShop.quantGoods(event.target.dataset.id);
                 eShop.sumGoods(event.target.dataset.id);
+                eShop.renderForm(event.target.dataset.id);
                 document.getElementById('cart').classList.remove('none') && document.getElementById('cart').classList.add('apear');
             }
         }, false);
@@ -167,7 +168,6 @@ var eShop = {
             cartQuantTd.innerHTML = this.basket.cart[k].quantity;
 
             var cartButton = document.createElement('td');
-
             var remove = document.createElement('button');
             remove.innerHTML = 'Удалить';
             remove.className = 'btn btn-danger';
@@ -186,6 +186,8 @@ var eShop = {
             cartTr.appendChild(cartButton);
             cartTable.appendChild(cartTr);
         }
+    },
+    renderForm: function (id) {
         var div = document.createElement('div');
         div.dataset.id = 'div';
         var button = document.createElement('button');
