@@ -56,6 +56,7 @@ var eShop = {
         var table = document.getElementById('main-table');
         table.addEventListener('click', function (event) {
             if (event.target.innerHTML === 'Купить') {
+                eShop.sum(event.target.dataset.id);
                 eShop.addItem(event.target.dataset.id);
                 document.getElementById('cart').classList.remove('none') && document.getElementById('cart').classList.add('apear');
             }
@@ -63,6 +64,7 @@ var eShop = {
         var cartTable = document.getElementById('cart');
         cartTable.addEventListener('click', function (event) {
             if (event.target.innerHTML === 'Удалить') {
+                eShop.sum(event.target.dataset.id);
                 eShop.dropItem(event.target.dataset.id)
             }
         }, false);
@@ -111,17 +113,10 @@ var eShop = {
         }
         eShop.renderCart();
     },
-    //    check: function (id) {
-    //        for (var k in eShop.basket.cart) {
-    //            eShop.basket.sum += eShop.basket.cart[k].price;
-    //            console.log(eShop.basket.sum);
-    ////        
-    //    },
-    sumGoods: function () {
-        for (var k in eShop.basket.cart) {
-            console.log(Object.keys(eShop.basket.cart).length);
-        }
 
+    sum: function (id) {
+        for (var k in eShop.basket.cart) {}
+        console.log(Object.keys(eShop.basket.cart).length);
     },
     //    Функция, которая генерит HTML товаров в корзине
     renderCart: function () {
@@ -166,4 +161,3 @@ var eShop = {
 }
 eShop.renderGoodsTable();
 eShop.handler();
-eShop.sumGoods();
