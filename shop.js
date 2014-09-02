@@ -52,7 +52,7 @@ var eShop = {
         }
     },
     //    Функция обработчиков событий
-    hendler: function () {
+    handler: function () {
         var table = document.getElementById('main-table');
         table.addEventListener('click', function (event) {
             if (event.target.innerHTML === 'Купить') {
@@ -89,25 +89,25 @@ var eShop = {
     //    Функция убирает товар из корзины
     dropItem: function (id) {
         if (eShop.basket.cart[id] !== undefined) {
-            eShop.basket.cart.splice(id, 1);
+            delete eShop.basket.cart[id];
         }
         eShop.renderCart();
-        console.log(eShop.basket.cart);
     },
     //    Функция изменения количества товаров
     changeItem: function (id) {
         var value = prompt('Введите нужное количество товаров');
-        if (+value === 0 || +value < 0) {
-            delete eShop.basket.cart[id];
-        } else if (isNaN(value)) {
-            alert('Введите числовой эквивалент');
-        } else if (typeof (+value) === 'number') {
-            if (value > eShop.basket.goods[id].quantity) {
-                value = eShop.basket.goods[id].quantity;
-            }
-            eShop.basket.cart[id].quantity = value;
-        } else if (value === null || value === '') {
+        if (value === null || value === '') {
             value = eShop.basket.cart[id].quantity;
+        } else if (isNaN(parseInt(value))) {
+            alert('Введите число');
+        } else if (value == 0 || value <= 0) {
+            delete eShop.basket.cart[id];
+        } else if (parseInt(value) == 0) {
+            alert('Введите целое число');
+        } else if (value <= eShop.basket.goods[id].quantity) {
+            eShop.basket.cart[id].quantity = value;
+        } else if (value > eShop.basket.goods[id].quantity) {
+            eShop.basket.cart[id].quantity = eShop.basket.goods[id].quantity;
         }
         eShop.renderCart();
     },
@@ -115,10 +115,13 @@ var eShop = {
     //        for (var k in eShop.basket.cart) {
     //            eShop.basket.sum += eShop.basket.cart[k].price;
     //            console.log(eShop.basket.sum);
-    ////        }
+    ////        
     //    },
     sumGoods: function () {
-        console.log(Object.keys(eShop.basket.cart).length);
+        for (var k in eShop.basket.cart) {
+            console.log(Object.keys(eShop.basket.cart).length);
+        }
+
     },
     //    Функция, которая генерит HTML товаров в корзине
     renderCart: function () {
@@ -162,5 +165,5 @@ var eShop = {
     }
 }
 eShop.renderGoodsTable();
-eShop.hendler();
+eShop.handler();
 eShop.sumGoods();
