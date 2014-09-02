@@ -2,7 +2,6 @@ var eShop = {
     basket: {
         //        Массив товаров в корзине
         cart: {},
-        sum: 0,
         //        Товары которые есть в магазине
         goods: [
             {
@@ -56,21 +55,25 @@ var eShop = {
         var table = document.getElementById('main-table');
         table.addEventListener('click', function (event) {
             if (event.target.innerHTML === 'Купить') {
-                eShop.sum(event.target.dataset.id);
                 eShop.addItem(event.target.dataset.id);
+                eShop.quantGoods(event.target.dataset.id);
+                eShop.sumGoods(event.target.dataset.id);
                 document.getElementById('cart').classList.remove('none') && document.getElementById('cart').classList.add('apear');
             }
         }, false);
         var cartTable = document.getElementById('cart');
         cartTable.addEventListener('click', function (event) {
             if (event.target.innerHTML === 'Удалить') {
-                eShop.sum(event.target.dataset.id);
-                eShop.dropItem(event.target.dataset.id)
+                eShop.dropItem(event.target.dataset.id);
+                eShop.quantGoods(event.target.dataset.id);
+                eShop.sumGoods(event.target.dataset.id);
             }
         }, false);
         cartTable.addEventListener('click', function (event) {
             if (event.target.innerHTML === 'Изменить количество') {
-                eShop.changeItem(event.target.dataset.id)
+                eShop.changeItem(event.target.dataset.id);
+                eShop.quantGoods(event.target.dataset.id);
+                eShop.sumGoods(event.target.dataset.id);
             }
         }, false)
     },
@@ -83,6 +86,8 @@ var eShop = {
                 price: goods.price,
                 quantity: 1
             }
+        } else if (eShop.basket.cart[id].quantity >= eShop.basket.goods[id].quantity) {
+            eShop.basket.cart[id].quantity = eShop.basket.goods[id].quantity;
         } else {
             eShop.basket.cart[id].quantity++;
         }
@@ -107,16 +112,40 @@ var eShop = {
         } else if (parseInt(value) == 0) {
             alert('Введите целое число');
         } else if (value <= eShop.basket.goods[id].quantity) {
-            eShop.basket.cart[id].quantity = value;
+            eShop.basket.cart[id].quantity = parseInt(value);
         } else if (value > eShop.basket.goods[id].quantity) {
             eShop.basket.cart[id].quantity = eShop.basket.goods[id].quantity;
         }
         eShop.renderCart();
     },
-
-    sum: function (id) {
-        for (var k in eShop.basket.cart) {}
-        console.log(Object.keys(eShop.basket.cart).length);
+    quant: 0,
+    //    Функция, которая ведет подсчет кол-ва товаров в корзине
+    quantGoods: function (id) {
+        this.quant = 0;
+        for (var k in eShop.basket.cart) {
+            this.quant += eShop.basket.cart[k].quantity;
+        }
+        //        eShop.quantDiv();
+    },
+    quantDiv: function () {
+        var div = document.createElement('div');
+        var p = document.createElement('p');
+        p.innerHTML = 'Количество товаров в корзине' + '<br>' + this.quant;
+        div.appendChild(p);
+        document.body.appendChild(div);
+    },
+    sum: 0,
+    //    Функция подсчета суммы товаров
+    sumGoods: function (id) {
+        this.sum = 0;
+        for (var k in eShop.basket.cart) {
+            this.sum += eShop.basket.cart[k].price * eShop.basket.cart[k].quantity;
+        }
+        console.log(this.sum);
+    },
+    dropDiv: function () {
+        var div = document.getElementById('div');
+        document.body.removeChild(div);
     },
     //    Функция, которая генерит HTML товаров в корзине
     renderCart: function () {
@@ -157,6 +186,13 @@ var eShop = {
             cartTr.appendChild(cartButton);
             cartTable.appendChild(cartTr);
         }
+        var div = document.createElement('div');
+        div.dataset.id = 'div';
+        var button = document.createElement('button');
+        button.dataset.id = 'form';
+        button.innerHTML = 'Оформить';
+        div.appendChild(button);
+        document.body.appendChild(div);
     }
 }
 eShop.renderGoodsTable();
