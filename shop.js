@@ -54,12 +54,15 @@ var eShop = {
     handler: function () {
         var table = document.getElementById('main-table');
         table.addEventListener('click', function (event) {
+            console.log(event.target);
             if (event.target.innerHTML === 'Купить') {
                 eShop.addItem(event.target.dataset.id);
                 eShop.quantGoods(event.target.dataset.id);
                 eShop.sumGoods(event.target.dataset.id);
                 eShop.renderForm(event.target.dataset.id);
-                document.getElementById('cart').classList.remove('none') && document.getElementById('cart').classList.add('apear');
+                eShop.basketHiden(event.target.dataset.id);
+                eShop.renderQuant(event.target.dataset.id);
+                eShop.renderSum(event.target.dataset.id);
             }
         }, false);
         var cartTable = document.getElementById('cart');
@@ -68,6 +71,10 @@ var eShop = {
                 eShop.dropItem(event.target.dataset.id);
                 eShop.quantGoods(event.target.dataset.id);
                 eShop.sumGoods(event.target.dataset.id);
+                eShop.renderForm(event.target.dataset.id);
+                eShop.basketHiden(event.target.dataset.id);
+                eShop.renderQuant(event.target.dataset.id);
+                eShop.renderSum(event.target.dataset.id);
             }
         }, false);
         cartTable.addEventListener('click', function (event) {
@@ -75,10 +82,21 @@ var eShop = {
                 eShop.changeItem(event.target.dataset.id);
                 eShop.quantGoods(event.target.dataset.id);
                 eShop.sumGoods(event.target.dataset.id);
+                eShop.renderForm(event.target.dataset.id);
+                eShop.basketHiden(event.target.dataset.id);
+                eShop.renderQuant(event.target.dataset.id);
+                eShop.renderSum(event.target.dataset.id);
+            }
+        }, false);
+        var form = document.getElementById('form');
+        form.addEventListener('click', function (event) {
+            console.log(event.target);
+            if (event.target.innerHTML === 'Оформить') {
+                eShop.renderForm();
             }
         }, false)
     },
-    //    Функция добавляет товар в корзину
+    //    Функция добавляет товар в корзину 
     addItem: function (id) {
         var goods = eShop.basket.goods[id];
         if (eShop.basket.cart[id] == undefined) {
@@ -126,14 +144,19 @@ var eShop = {
         for (var k in eShop.basket.cart) {
             this.quant += eShop.basket.cart[k].quantity;
         }
-        //        eShop.quantDiv();
+        //        console.log(this.quant);
     },
-    quantDiv: function () {
-        var div = document.createElement('div');
-        var p = document.createElement('p');
-        p.innerHTML = 'Количество товаров в корзине' + '<br>' + this.quant;
-        div.appendChild(p);
-        document.body.appendChild(div);
+    //    Функция которая выводит элемент с кол-вом товаров в корзине
+    renderQuant: function (id) {
+        var renderQuant = document.getElementById('quant');
+        renderQuant.innerHTML = 'Количество товаров в корзине' + '<br>' + eShop.quant;
+        if (eShop.quant === 1) {
+            renderQuant.classList.add('block');
+        }
+        if (eShop.quant === 0) {
+            renderQuant.classList.remove('block');
+            renderQuant.classList.add('hiden')
+        }
     },
     sum: 0,
     //    Функция подсчета суммы товаров
@@ -142,11 +165,28 @@ var eShop = {
         for (var k in eShop.basket.cart) {
             this.sum += eShop.basket.cart[k].price * eShop.basket.cart[k].quantity;
         }
-        console.log(this.sum);
     },
-    dropDiv: function () {
-        var div = document.getElementById('div');
-        document.body.removeChild(div);
+    //    Функция, которая выводит элемент с суммой товаров в корзине
+    renderSum: function (id) {
+        var renderSum = document.getElementById('sum');
+        renderSum.innerHTML = 'Стоимость товаров' + '<br>' + eShop.sum;
+        if (eShop.sum >= 1) {
+            renderSum.classList.add('block');
+        }
+        if (eShop.sum === 0) {
+            renderSum.classList.remove('block');
+            renderSum.classList.add('hiden')
+        }
+    },
+    renderForm: function () {
+        //        var inputs = document.getElementById('inputs');
+        //        if (eShop.sum >= 1) {
+        //            inputs.classList.add('apear');
+        //        }
+        //        if (eShop.sum === 0) {
+        //            inputs.classList.toggle('apear');
+        //        }
+        console.log('функция сработала');
     },
     //    Функция, которая генерит HTML товаров в корзине
     renderCart: function () {
@@ -187,15 +227,27 @@ var eShop = {
             cartTable.appendChild(cartTr);
         }
     },
+    //    Функция, которая создает кнопку Оформить
     renderForm: function (id) {
-        var div = document.createElement('div');
-        div.dataset.id = 'div';
-        var button = document.createElement('button');
-        button.dataset.id = 'form';
-        button.innerHTML = 'Оформить';
-        div.appendChild(button);
-        document.body.appendChild(div);
+        var form = document.getElementById('form');
+        if (eShop.quant === 1) {
+            form.classList.add('apear');
+        }
+        if (eShop.quant === 0) {
+            form.classList.toggle('apear');
+        }
+    },
+    //    Функция прячет корзину, если там нет товаров
+    basketHiden: function (id) {
+        var cart = document.getElementById('cart');
+        if (eShop.quant === 1) {
+            cart.classList.add('apear');
+        }
+        if (eShop.quant === 0) {
+            cart.classList.toggle('apear');
+        }
     }
+
 }
 eShop.renderGoodsTable();
 eShop.handler();

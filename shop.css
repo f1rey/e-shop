@@ -9,3 +9,20 @@ table caption {
     font-weight: 700;
     margin-bottom: 15px;
 }
+div.hide {
+    display: none;
+}
+div.apear {
+    display: block;
+}
+p.hiden {
+    display: none;
+}
+p.block {
+    display: block;
+}
+div p {
+    margin-bottom: 30px;
+    width: 40%;
+    background-color: rgba(206, 219, 219, 0.56);
+}
