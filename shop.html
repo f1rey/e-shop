@@ -24,7 +24,7 @@
         <th>Действия</th>
     </table>
     <div id="form" class="hide">
-        <button class="btn-large btn-success">Оформить</button>
+        <button class="btn btn-success">Оформить</button>
     </div>
     <div>
         <p id="quant"></p>
@@ -35,16 +35,30 @@
     <div id="inputs" class="hide">
         <p>Форма оформления заказа</p>
         <p>Имя
-            <input type="text" value="">
+            <input id="name" type="text" value="">
         </p>
         <p>Фамилия
-            <input type="text" value="">
+            <input id="sername" type="text" value="">
         </p>
         <p>Адрес
-            <input type="text" value="">
+            <input id="adress" type="text" value="">
         </p>
-
+        <button class="btn btn-success">Подтвердить</button>
     </div>
+    <div id="check" class="hide">
+        <p>Спасибо за покупку</p>
+        <p>Ваши товары</p>
+        <br>
+        <p>
+            <ul id="data"></ul>
+        </p>
+    </div>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
+    <br>
 </body>
 <script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script type="text/javascript" src="shop.js"></script>

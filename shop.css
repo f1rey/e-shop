@@ -23,6 +23,10 @@ p.block {
 }
 div p {
     margin-bottom: 30px;
-    width: 40%;
-    background-color: rgba(206, 219, 219, 0.56);
+    width: 230px;
+    background-color: rgb(206, 219, 219);
+}
+#inputs {
+    background-color: rgb(206, 219, 219);
+    width: 230px;
 }
