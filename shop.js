@@ -75,6 +75,7 @@ var eShop = {
                 eShop.renderQuant(event.target.dataset.id);
                 eShop.renderSum(event.target.dataset.id);
                 eShop.renderInputs(event.target);
+                eShop.check();
             }
         }, false);
         cartTable.addEventListener('click', function (event) {
@@ -87,6 +88,7 @@ var eShop = {
                 eShop.renderQuant(event.target.dataset.id);
                 eShop.renderSum(event.target.dataset.id);
                 eShop.renderInputs(event.target);
+                eShop.check();
             }
         }, false);
         var form = document.getElementById('form');
@@ -182,11 +184,19 @@ var eShop = {
             var check = document.getElementById('check');
             check.classList.add('apear');
             var checkUl = document.getElementById('data')
+            checkUl.innerHTML = '';
             for (var k in this.basket.cart) {
                 var checkLi = document.createElement('li');
                 checkLi.innerHTML = this.basket.cart[k].title;
                 checkUl.appendChild(checkLi);
             }
+            var information = document.getElementById('information');
+            information.innerHTML = name.value + ' ' + sermane.value + ' Адрес: ' + adress.value;
+            var sum = document.getElementById('checksum')
+            sum.innerHTML = 'Сумма: ' + this.sum;
+        }
+        if (this.sum === 0) {
+            check.classList.toggle('apear');
         }
     },
     //    Функция, которая выводит элемент с суммой товаров в корзине
