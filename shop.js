@@ -88,7 +88,6 @@ var eShop = {
                 eShop.renderQuant(event.target.dataset.id);
                 eShop.renderSum(event.target.dataset.id);
                 eShop.renderInputs(event.target);
-                eShop.check();
             }
         }, false);
         var form = document.getElementById('form');
@@ -152,6 +151,7 @@ var eShop = {
         for (var k in eShop.basket.cart) {
             this.quant += eShop.basket.cart[k].quantity;
         }
+        console.log(this.quant);
     },
     //    Функция которая выводит элемент с кол-вом товаров в корзине
     renderQuant: function (id) {
