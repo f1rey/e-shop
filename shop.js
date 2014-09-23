@@ -279,7 +279,6 @@ var eShop = {
             cart.classList.toggle('apear');
         }
     }
-
 }
 eShop.renderGoodsTable();
 eShop.handler();
